@@ -11,6 +11,9 @@ use Illuminate\Support\Env;
 use Inertia\Inertia;
 use App\Models\Review;
 use App\Http\Controllers\Payment\TripayController;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Firebase\JWT\ExpiredException;
 
 class FrontController extends Controller
 {
@@ -101,6 +104,69 @@ class FrontController extends Controller
         return response()->json([
             'success' => true,
             'data' => $products,
+        ]);
+    }
+
+    public function review($code) {
+        try {
+            $decoded = JWT::decode($code, new Key(env('JWT_KEY'), 'HS256'));
+            $transaction = Transaction::where('reference', $decoded->aud)->where('review_code', $code)->first();
+
+            if(!$transaction) {
+                abort(404);
+            }
+            
+            return Inertia::render('CreateReview', [
+                'title' => 'Create Review',
+                'merchant' => Env::get('APP_NAME'),
+                'code' => $code,
+                'transaction' => $transaction,
+            ]);
+
+        } catch (ExpiredException) {
+            abort(404);
+        }
+    }
+
+    public function review_store(Request $request, $code) {
+        try {
+            $decoded = JWT::decode($code, new Key(env('JWT_KEY'), 'HS256'));
+            $transaction = Transaction::where('reference', $decoded->aud)->where('review_code', $code)->first();
+
+            if(!$transaction) {
+                abort(404);
+            }
+
+            $data = $request->validate([
+                'id_product' => 'required|numeric|exists:products,id',
+                'name' => 'required|string',
+                'star' => 'required|numeric|min:1|max:5',
+                'description' => 'required|string',
+            ]);
+
+            $review = Review::create([
+                'id_product' => $data['id_product'],
+                'name' => $data['name'],
+                'star' => $data['star'],
+                'description' => $data['description'],
+            ]);
+
+            if($review) {
+                $transaction->review_code = null;
+                $transaction->save();
+
+                return redirect()->route('review.success');
+            }
+
+        } catch (ExpiredException) {
+            abort(404);
+        }
+    }
+    
+    public function review_success() {
+        return Inertia::render('ReviewSuccess', [
+            'title' => 'Review Success',
+            'merchant' => Env::get('APP_NAME'),
         ]);
     }
 }

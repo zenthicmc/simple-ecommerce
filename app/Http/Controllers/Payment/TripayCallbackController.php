@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Stock;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class TripayCallbackController extends Controller
 {
@@ -49,7 +51,18 @@ class TripayCallbackController extends Controller
                 $transaction->update(['id_stock' => $stock->id]);
                 $stock->isUnlimited == 'true' ? $stock->update(['available' => 'true']) : $stock->update(['available' => 'false']);
 
-                $transaction->update(['status' => 'PAID']);
+                $payload = [
+                    'iss' => env('APP_NAME'),
+                    'aud' => $transaction->reference,
+                    'iat' => time(),
+                    'exp' => time() + 60 * 60 * 24 * 30,
+                ];
+
+                $review_code = JWT::encode($payload, env('JWT_KEY'), 'HS256');
+                $transaction->update([
+                    'status' => 'PAID',
+                    'review_code' => $review_code
+                ]);
 
                 return response()->json([
                     'success' => true,

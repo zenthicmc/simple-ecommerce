@@ -13,6 +13,7 @@ use App\Models\Stock;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Env;
 
 class TransactionController extends Controller
 {
@@ -91,6 +92,7 @@ class TransactionController extends Controller
         // Request to Tripay
         $tripay = new TripayController();
         $transaction = $tripay->requestTransaction($product->name, $data['total'], $data['quantity'], $product->image, $data['method'], $product->price, $data['fullname'], $data['email'], $data['phone']);
+
 
         // Create a new data in Transaction model
         Transaction::create([

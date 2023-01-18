@@ -46,7 +46,7 @@
                   </div>
                </div>
             </div>
-         <button type="submit" class="btn btn-primary btn-sm ms-auto mt-2 w-100 ">Create</button>
+         <button type="submit" class="btn btn-primary btn-sm ms-auto mt-2 w-100 ">Update</button>
          </form>
       </div>
     </div>

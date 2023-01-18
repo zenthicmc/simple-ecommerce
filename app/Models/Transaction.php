@@ -25,6 +25,7 @@ class Transaction extends Model
       'status',
       'method',
       'link',
+      'review_code',
       'created_at',
       'updated_at'
    ];
