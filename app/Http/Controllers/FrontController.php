@@ -26,7 +26,7 @@ class FrontController extends Controller
             'products' => Product::all(),
             'reviews' => $review,
             'count_transactions' => count(Transaction::where('status', 'PAID')->get()),
-            'average_review' => floor($review->avg('star')),
+            'average_review' => $review->avg('star'),
             'count_review' => count($review),
 		]);
     }
@@ -35,6 +35,7 @@ class FrontController extends Controller
     {
         $product = Product::where('slug', $slug)->first();
         $stocks = Stock::where('id_product', $product->id)->where('available', 'true')->get();
+        $review = Review::where('id_product', $product->id)->get();
         return Inertia::render('Detail', [
             'title' => 'Detail',
             'merchant' => Env::get('APP_NAME'),
@@ -42,6 +43,8 @@ class FrontController extends Controller
             'count_stocks' => count($stocks),
             'stocks' => $stocks,
             'count_transactions' => count(Transaction::where('status', 'PAID')->where('id_product', $product->id)->get()),
+            'count_review' => count($review),
+            'count_star' => $review->avg('star'),
         ]);
     }
 
@@ -70,10 +73,20 @@ class FrontController extends Controller
         ]);
     }
 
-    public function success() {
+    public function success($merchantref) {
+        $transaction = Transaction::where('merchant_ref', $merchantref)->first();
+
+        if(!$transaction) {
+            abort(404);
+        }
+
+        $stock = Stock::where('id', $transaction->id_stock)->first();
+
         return Inertia::render('Success', [
             'title' => 'Success',
             'merchant' => Env::get('APP_NAME'),
+            'transaction' => $transaction,
+            'stock' => $stock,
         ]);
     }
 

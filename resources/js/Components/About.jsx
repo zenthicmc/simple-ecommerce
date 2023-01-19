@@ -24,9 +24,12 @@ const About = (props) => {
 					<Flex alignItems='center' marginTop={2}>
 						<Text fontSize='md' fontWeight='500' marginRight='2' marginTop={0.5}>{props.avg_review}</Text>
 						{
-							[...Array(props.avg_review)].map((_, i) => (
-								<AiFillStar key={i} color={'orange'} />
-							))
+							[...Array(5)].map((star, i) => {
+								const ratingValue = i + 1
+								return (
+									<AiFillStar key={i} color={ratingValue <= props.avg_review ? 'orange' : '#e4e5e9'} />
+								)
+							})
 						}
 						<Text fontSize='sm' fontWeight='300' marginLeft='2'>({props.count_review} reviews)</Text>
 					</Flex>

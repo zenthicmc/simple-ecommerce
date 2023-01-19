@@ -6,8 +6,16 @@ import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { Link } from '@inertiajs/inertia-react'
 
+const sanitize = (str) => {
+	const string = str.replace(/<\/?[^>]+(>|$)/g, "")
+	const new_string = string.replace(/&nbsp;/g, " ")
+	return new_string
+}
+
 const Success = (props) => {
 	const bg = useColorModeValue('gray.50', 'gray.700')
+	const transaction = props.transaction
+	const stock = props.stock
 
 	return (
 		<div className={main.container}>
@@ -25,9 +33,19 @@ const Success = (props) => {
 					<Text fontSize={'sm'} fontWeight={'300'} textAlign={'center'} marginBottom={'5'} marginTop={'1'}>
 						Your order has been received and is now being processed. Your order details will be sent to your email. Please check your email for your order details.
 					</Text>
-					<Center marginBottom={'10'} w={'100%'}>
+					<Text fontSize={'sm'} fontWeight={'300'} textAlign={'center'} marginBottom={'2'} marginTop={'1'}>
+						Your Order Details:
+					</Text>
+					<Text fontSize={'sm'} fontWeight={'600'} textAlign={'center'} marginBottom={'7'} marginTop={'1'}>
+						<div dangerouslySetInnerHTML={{__html: stock.content}}></div>
+					</Text>
+					<Center marginBottom={'10'} w={'100%'} gap={'5'}>
 						<Link href={'/'} w={'100%'}>
 							<Button w={'100%'} colorScheme={'teal'} variant={'solid'}>Back to Home</Button>
+						</Link>
+
+						<Link href={route('review.write', transaction.review_code)} w={'100%'}>
+							<Button w={'100%'} colorScheme={'teal'} variant={'outline'}>Write Review</Button>
 						</Link>
 					</Center>
 				</Box>

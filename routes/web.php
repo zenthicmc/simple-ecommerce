@@ -31,7 +31,7 @@ Route::get('/product/{slug}', [FrontController::class, 'detail'])->name('detail'
 Route::get('/checkout/{id_product}/{quantity}', [FrontController::class, 'checkout'])->name('checkout');
 Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction.store');
 Route::get('/redirect/{reference}', [FrontController::class, 'redirect'])->name('redirect');
-Route::get('/success', [FrontController::class, 'success'])->name('success');
+Route::get('/success/{merchantref}', [FrontController::class, 'success'])->name('success');
 Route::post('/tripay/callback', [TripayCallbackController::class, 'handle'])->name('callback');
 
 Route::get('/api/product/{filter}', [FrontController::class, 'api_product'])->name('api_product');

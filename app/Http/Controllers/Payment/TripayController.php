@@ -46,7 +46,7 @@ class TripayController extends Controller
             'customer_name'  => $fullname,
             'customer_email' => $email,
             'customer_phone' => $phone,
-            "return_url" => env('APP_URL') . '/success',
+            "return_url" => env('APP_URL') . '/success/' . $merchantRef,
             'order_items'    => [
                 [
                     'name'        => $name,

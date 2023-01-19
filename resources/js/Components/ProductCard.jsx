@@ -36,7 +36,7 @@ const ProductCard = ({ data }) => {
 						margin={'auto'}
 					/>
 					<Stack mt='4' spacing='2'>
-						<Text size='sm' fontWeight={'500'} textTransform="capitalize">{data.name}</Text>
+						<Text size='sm' fontWeight={'600'} textTransform="capitalize">{data.name}</Text>
 						<Text fontSize='sm'>
 							{sanitize(data.description)}
 						</Text>

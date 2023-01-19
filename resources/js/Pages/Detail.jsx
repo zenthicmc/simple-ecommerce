@@ -22,13 +22,16 @@ const Detail = (props) => {
 							<Text fontSize={'sm'} fontWeight={'300'}>Product sold {props.count_transactions} times</Text>
 							<Text mx={'3'}>•</Text>
 							<Flex alignItems='center' marginTop={0}>
-								<Text fontSize='sm' fontWeight='500' marginRight='2' marginTop={0.5}>5</Text>
-								<AiFillStar color='orange' size='20' />
-								<AiFillStar color='orange' size='20' />
-								<AiFillStar color='orange' size='20' />
-								<AiFillStar color='orange' size='20' />
-								<AiFillStar color='orange' size='20' />
-								<Text fontSize='sm' fontWeight='300' marginLeft='2'>(10 reviews)</Text>
+								<Text fontSize='sm' fontWeight='500' marginRight='2' marginTop={0.5}>{props.count_star}</Text>
+								{ props.count_star > 0 ?
+									[...Array(5)].map((star, i) => {
+										const ratingValue = i + 1
+										return (
+											<AiFillStar key={i} color={ratingValue <= props.count_star ? 'orange' : '#e4e5e9'} />
+										)
+									}) : 'No review yet'
+								}
+								<Text fontSize='sm' fontWeight='300' marginLeft='2'>({props.count_review} reviews)</Text>
 							</Flex>
 						</Flex>
 						<Divider marginTop={'3'}/>
