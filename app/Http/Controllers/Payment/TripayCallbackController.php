@@ -9,6 +9,8 @@ use App\Models\Product;
 use App\Models\Stock;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
 
 class TripayCallbackController extends Controller
 {
@@ -64,6 +66,7 @@ class TripayCallbackController extends Controller
                     'review_code' => $review_code
                 ]);
 
+                Mail::to($transaction->email)->send(new OrderShipped($transaction));
                 return response()->json([
                     'success' => true,
                     'message' => 'Payment success, please check your email'

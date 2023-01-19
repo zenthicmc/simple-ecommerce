@@ -45,6 +45,17 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
+        'smtp2' => [
+            'transport' => 'smtp',
+            'host' => "mail.himatikauty.com",
+            'port' => "465",
+            'encryption' => "tls",
+            'username' => "kapitalzone2@himatikauty.com",
+            'password' => "eLFa7oAzqJsO",
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -74,8 +85,7 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
-                'log',
+                'smtp2',
             ],
         ],
     ],

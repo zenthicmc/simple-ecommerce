@@ -37,7 +37,7 @@ Route::post('/tripay/callback', [TripayCallbackController::class, 'handle'])->na
 Route::get('/api/product/{filter}', [FrontController::class, 'api_product'])->name('api_product');
 Route::post('/review_store/{code}', [FrontController::class, 'review_store'])->name('review_store');
 Route::get('/review/success', [FrontController::class, 'review_success'])->name('review.success');
-Route::get('/review/{code}', [FrontController::class, 'review'])->name('review');
+Route::get('/review/{code}', [FrontController::class, 'review'])->name('review.write');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
