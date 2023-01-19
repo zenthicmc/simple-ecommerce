@@ -26,6 +26,7 @@
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stock</th>
                 <th class="text-secondary opacity-7"></th>
+					 <th class="text-secondary opacity-7"></th>
               </tr>
             </thead>
             <tbody>
@@ -68,18 +69,34 @@
                   </td>
 
                   <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">{{ countStockByIdProduct($product->id) }}</span>
+                  	<span class="text-secondary text-xs font-weight-bold">{{ countStockByIdProduct($product->id) }}</span>
                   </td>
+						 <td class="align-middle">
+                    <div class="col-md-2">
+                     	<a href="{{ route('detail',$product->slug) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+									<span class="badge bg-success">
+										<i class="fa-solid fa-eye me-1"></i>
+										View
+									</span>
+                     	</a>
+                    </div>
+						</td>
                   <td class="align-middle">
                     <div class="col-md-2">
-                       <a href="{{ route('product_edit',$product->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                       &nbsp;&nbsp;Edit
-                       </a>
+                     	<a href="{{ route('product_edit',$product->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+									<span class="badge bg-warning">
+										<i class="fa-solid fa-pen me-1"></i>
+										Edit
+									</span>
+                     	</a>
                     </div>
-                    <div class="col-md-2">
-                       <form method="post" action="{{ route('product_delete', $product->id) }}">@csrf<input type="hidden" name="_method" value="DELETE"><button style="background: none;border: none;" type="submit" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                       Delete
-                       </button></form>
+                    <div class="col-md-2 p-0">
+								<form method="post" action="{{ route('product_delete', $product->id) }}">@csrf<input type="hidden" name="_method" value="DELETE"><button style="background: none;border: none;" type="submit" class="text-secondary font-weight-bold text-xs m-0 p-0">
+									<span class="badge bg-danger">
+										<i class="fa-solid fa-trash me-1"></i>
+										Delete
+									</span>
+								</button></form>
                     </div>
                   </td>
                 </tr>

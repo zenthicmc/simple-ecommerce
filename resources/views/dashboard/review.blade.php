@@ -54,16 +54,22 @@
                      <span class="text-secondary text-xs font-weight-bold">{{ $review->created_at }}</span>
                   </td>
 						
-                  <td class="align-middle">
+                  <td class="align-middle d-flex">
                     <div class="col-md-2">
-                       <a href="{{ route('review_edit',$review->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                       &nbsp;&nbsp;Edit
-                       </a>
+                        <a href="{{ route('review_edit',$review->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          <span class="badge bg-warning">
+                            <i class="fa-solid fa-pen me-1"></i>
+                            Edit
+                          </span>
+                        </a>
                     </div>
-                    <div class="col-md-2">
-                       <form method="post" action="{{ route('review_delete', $review->id) }}">@csrf<input type="hidden" name="_method" value="DELETE"><button style="background: none;border: none;" type="submit" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                       Delete
-                       </button></form>
+                    <div class="col-md-2 ms-3">
+                        <form method="post" action="{{ route('review_delete', $review->id) }}">@csrf<input type="hidden" name="_method" value="DELETE"><button style="background: none;border: none;" type="submit" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          <span class="badge bg-danger">
+                            <i class="fa-solid fa-trash me-1"></i>
+                            Delete
+                          </span>
+                        </button></form>
                     </div>
                   </td>
                 </tr>

@@ -49,12 +49,18 @@
                 <td class="align-middle d-flex">
                   <div class="col-md-2">
                      <a href="{{ route('category_edit',$category->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                     Edit
+                      <span class="badge bg-warning">
+                        <i class="fa-solid fa-pen me-1"></i>
+                        Edit
+                      </span>
                      </a>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2 ms-2">
                      <form method="post" action="{{ route('category_delete', $category->id) }}">@csrf<input type="hidden" name="_method" value="DELETE"><button style="background: none;border: none;" type="submit" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                     Delete
+                      <span class="badge bg-danger">
+                        <i class="fa-solid fa-trash me-1"></i>
+                        Delete
+                      </span>
                      </button></form>
                   </div>
                 </td>

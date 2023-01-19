@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 
@@ -28,9 +29,12 @@ class PurchaseController extends Controller
     public function edit_store(Request $request, $reference)
     {
         $transaction = Transaction::where('reference', $reference)->first();
+        $stock = Stock::where('id', $transaction->id_stock)->first();
+
         $transaction->status = $request->status;
-        $transaction->stock = $request->stock;
+        $stock->content = $request->stock;
         $transaction->save();
+        $stock->save();
 
         return redirect()->route('admin.purchase')->with('success', 'Purchase status updated');
     }
