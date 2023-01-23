@@ -1,6 +1,7 @@
 import { Box, Badge, Text, Image, Flex } from '@chakra-ui/react'
 import { AiFillStar } from 'react-icons/ai'
 import { useColorModeValue } from '@chakra-ui/color-mode'
+import LogoKapital from '../Assets/logo-kapital.png'
 
 const About = (props) => {
 	const bg = useColorModeValue('gray.50', 'gray.700')
@@ -9,7 +10,7 @@ const About = (props) => {
 		<Box bg={bg} w='100%' p='5' borderRadius='md' borderWidth='1px' marginTop={10}>
 			<Flex justifyContent='space-around' alignItems='' direction={{ base: 'column', md: 'column', lg: 'row' }}>
 				<Box>
-					<Image src='https://picsum.photos/200' alt='store' width='70' height='70' borderRadius='sm'	/>
+					<Image src={LogoKapital} alt='store' width='70' height='70' borderRadius='sm'	/>
 				</Box>
 				<Box marginLeft={{ base: '0', lg: '0.5rem' }} marginTop={{ base: '3' }}>
 					<Badge colorScheme='teal' paddingStart='2' paddingEnd='2' paddingTop={1} paddingBottom={1} borderRadius='sm'>{props.merchant}</Badge>
