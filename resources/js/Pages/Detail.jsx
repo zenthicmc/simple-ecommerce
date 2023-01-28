@@ -21,7 +21,7 @@ const Detail = (props) => {
 						<Flex alignItems={'center'} marginTop={'2'}>
 							<Text fontSize={'sm'} fontWeight={'300'}>Product sold {props.count_transactions} times</Text>
 							<Text mx={'3'}>•</Text>
-							<Flex alignItems='center' marginTop={0}>
+							<Flex alignItems='center'>
 								<Text fontSize='sm' fontWeight='500' marginRight='2' marginTop={0.5}>{props.count_star}</Text>
 								{ props.count_star > 0 ?
 									[...Array(5)].map((star, i) => {
@@ -34,7 +34,7 @@ const Detail = (props) => {
 								<Text fontSize='sm' fontWeight='300' marginLeft='2'>({props.count_review} reviews)</Text>
 							</Flex>
 						</Flex>
-						<Divider my={'3'}/>
+						<Divider my={'5'}/>
 						<Image 
 							src={'/product-images/' + product.image} 
 							borderRadius='lg'
