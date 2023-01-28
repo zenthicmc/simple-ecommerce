@@ -51,7 +51,7 @@ const Products = (props) => {
 			</Flex>
 			
 			<Divider marginTop='5' marginBottom='5'/>
-			<Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={6}>
+			<Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={5}>
 				{products && products.map((product, index) => (
 					!loading ? <GridItem key={index}>
 						<ProductCard data={product} margin={'0'} />
