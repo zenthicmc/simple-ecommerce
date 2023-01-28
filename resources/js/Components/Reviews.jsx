@@ -8,7 +8,7 @@ const Reviews = (props) => {
 		
 	return (
 		<>
-			<Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={6}>
+			<Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={5}>
 				{reviews && reviews.map((data, i) => (
 					<GridItem key={i}>
 						<ReviewCard review={data} margin={'0'} />
