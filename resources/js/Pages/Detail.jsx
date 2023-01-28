@@ -34,7 +34,7 @@ const Detail = (props) => {
 								<Text fontSize='sm' fontWeight='300' marginLeft='2'>({props.count_review} reviews)</Text>
 							</Flex>
 						</Flex>
-						<Divider marginTop={'3'}/>
+						<Divider my={'3'}/>
 						<Image 
 							src={'/product-images/' + product.image} 
 							borderRadius='lg'
