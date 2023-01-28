@@ -43,7 +43,7 @@
                <div class="col-md-12">
                   <div class="form-group">
                      <label class="form-control-label">Items</label>
-                     <input id="stock" type="hidden" name="stock" value="{{ $transaction->stock->content }}">
+                     <input id="stock" type="hidden" name="stock" value="{{ $transaction->stock }}">
                      <trix-editor input="stock"></trix-editor>
                   </div>
                </div>

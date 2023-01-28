@@ -50,8 +50,15 @@ class TripayCallbackController extends Controller
             }
 
 			if ($stock && $status === 'PAID') {
-                $transaction->update(['id_stock' => $stock->id]);
-                $stock->isUnlimited == 'true' ? $stock->update(['available' => 'true']) : $stock->update(['available' => 'false']);
+                $count = $transaction->quantity;
+                for ($i = 0; $i < $count; $i++) {
+                    $stock = Stock::where('id_product', $product->id)->where('available', 'true')->first();
+                    // update transaction stock without removing previous value
+                    $transaction->update([
+                        'stock' => $transaction->stock . $stock->content
+                    ]);
+                    $stock->isUnlimited == 'true' ? $stock->update(['available' => 'true']) : $stock->update(['available' => 'false']);
+                }
 
                 $payload = [
                     'iss' => env('APP_NAME'),
@@ -69,7 +76,8 @@ class TripayCallbackController extends Controller
                 Mail::to($transaction->email)->send(new OrderShipped($transaction));
                 return response()->json([
                     'success' => true,
-                    'message' => 'Payment success, please check your email'
+                    'message' => 'Payment success, please check your email',
+                    'transaction' => $transaction,
                 ]);
 
             } else {

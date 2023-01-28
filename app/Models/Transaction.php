@@ -14,7 +14,7 @@ class Transaction extends Model
    protected $table = 'transactions';
    protected $fillable = [
       'id_product',
-      'id_stock',
+      'stock',
       'email',
       'name',
       'phone',

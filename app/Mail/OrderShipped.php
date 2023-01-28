@@ -28,8 +28,6 @@ class OrderShipped extends Mailable
     public function __construct(Transaction $transaction)
     {
         $this->transaction = $transaction;
-        $this->stock = Stock::where('id', $transaction->id_stock)->first();
-        $this->product = Product::where('id', $transaction->id_product)->first();
     }
 
     /**

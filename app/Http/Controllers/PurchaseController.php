@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
 
 class PurchaseController extends Controller
 {
@@ -29,12 +31,12 @@ class PurchaseController extends Controller
     public function edit_store(Request $request, $reference)
     {
         $transaction = Transaction::where('reference', $reference)->first();
-        $stock = Stock::where('id', $transaction->id_stock)->first();
 
         $transaction->status = $request->status;
-        $stock->content = $request->stock;
+        $transaction->stock = $request->stock;
         $transaction->save();
-        $stock->save();
+
+        Mail::to($transaction->email)->send(new OrderShipped($transaction));
 
         return redirect()->route('admin.purchase')->with('success', 'Purchase status updated');
     }
