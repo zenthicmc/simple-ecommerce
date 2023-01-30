@@ -56,13 +56,13 @@ const Detail = (props) => {
 							<Increament stock={props.count_stocks} data={props.stocks} price={product.price} id={product.id} />
 						</CardBody>
 					</Card>
-					<Card w={'100%'} h={'260'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
+					<Card w={'100%'} h={'320'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
 						<CardBody>
 							<Text fontSize={'lg'} fontWeight={'600'} marginBottom={'5'}>✅ Warranty</Text>
 							<Text fontSize={'sm'} fontWeight={'300'}>
-								1. SEMUA BARANG YANG SUDAH DIBELI DAN SUDAH DIPAKAI TIDAK DAPAT DI REFUND
-								2. JIKA PRODUK YANG DITERIMA TIDAK  BISA DIGUNAKAN KAMI AKAN MEMBERIKAN GARANSI
-								3. JIKA BUTUH BANTUAN BISA JOIN DISCORD KAMI https://discord.gg/kzone UNTUK MENDAPAT SUPPORT LEBIH LANJUT
+								1. SEMUA BARANG YANG SUDAH DIBELI DAN SUDAH DIPAKAI TIDAK DAPAT DI REFUND<br />
+								2. JIKA PRODUK YANG DITERIMA TIDAK  BISA DIGUNAKAN KAMI AKAN MEMBERIKAN GARANSI<br />
+								3. JIKA BUTUH BANTUAN BISA JOIN DISCORD KAMI https://discord.gg/kzone UNTUK MENDAPAT SUPPORT LEBIH LANJUT<br />
 								4. JIKA ADA PERTANYAAN BISA JOIN DISCORD KAMI https://discord.gg/kzone
 							</Text>
 						</CardBody>
