@@ -56,7 +56,7 @@ const Detail = (props) => {
 							<Increament stock={props.count_stocks} data={props.stocks} price={product.price} id={product.id} />
 						</CardBody>
 					</Card>
-					<Card w={'100%'} h={'320'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
+					<Card w={'100%'} h={'340'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
 						<CardBody>
 							<Text fontSize={'lg'} fontWeight={'600'} marginBottom={'5'}>✅ Warranty</Text>
 							<Text fontSize={'sm'} fontWeight={'300'}>
