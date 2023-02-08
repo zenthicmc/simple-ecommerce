@@ -5,8 +5,9 @@ namespace App\Imports;
 use App\Models\Stock;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class StockImport implements ToModel
+class StockImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -16,12 +17,14 @@ class StockImport implements ToModel
     public function model(array $row)
     {
         $random_string = Str::random(10);
-        return new Stock([
+        $data = [
             'code' => 'ST-'. $random_string,
-            'id_product' => $row[0],
-            'isUnlimited' => $row[1],
-            'content' => $row[2],
-            'expire_at' => $row[3],
-        ]);
+            'id_product' => $row['id_product'],
+            'isUnlimited' => $row['is_unlimited'],
+            'content' => $row['content'],
+            'expire_at' => $row['expire_at'],
+        ];
+        
+        return new Stock($data);
     }
 }

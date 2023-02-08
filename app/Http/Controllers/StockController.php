@@ -100,7 +100,10 @@ class StockController extends Controller
          'file' => ['required', 'file', 'mimes:xlsx,xls'],
       ]);
 
-      Excel::import(new StockImport, $request->file('file')->store('temp'));
+      $fileName = time().'.'.$request->file->extension();
+      $request->file->move(public_path('upload/'), $fileName);
+
+      Excel::import(new StockImport, public_path('upload/' . $fileName));
 
       return redirect()->route('stock')->with('success', 'Stock imported successfully');
    }
