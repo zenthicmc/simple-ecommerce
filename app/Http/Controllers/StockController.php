@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Product;
+use App\Imports\StockImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller
 {
@@ -82,5 +84,24 @@ class StockController extends Controller
       $stock = Stock::where('code', $code)->first();
       $stock->delete();
       return redirect()->route('stock')->with('success', 'Stock deleted successfully');
+   }
+
+   public function stock_import()
+   {
+      $data = [
+         'title' => 'Admin | Stocks',
+      ];
+      return view('dashboard.stock_import', $data);
+   }
+
+   public function stock_import_store(Request $request)
+   {
+      $request->validate([
+         'file' => ['required', 'file', 'mimes:xlsx,xls'],
+      ]);
+
+      Excel::import(new StockImport, $request->file('file')->store('temp'));
+
+      return redirect()->route('stock')->with('success', 'Stock imported successfully');
    }
 }

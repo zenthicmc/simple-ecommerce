@@ -95,6 +95,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard/admin/stock/edit/{id}', [StockController::class, 'edit'])->name('stock_edit');
         Route::put('/dashboard/admin/stock/edit/{id}', [StockController::class, 'edit_store'])->name('stock_edit_store');
         Route::delete('/dashboard/admin/stock/delete/{id}', [StockController::class, 'delete'])->name('stock_delete');
+
+        Route::get('/dashboard/admin/stock/import', [StockController::class, 'stock_import'])->name('stock_import');
+        Route::post('/dashboard/admin/stock/import', [StockController::class, 'stock_import_store'])->name('stock_import_store');
     
         // Review Routes
         Route::get('/dashboard/admin/review', [ReviewController::class, 'index'])->name('review');

@@ -41,7 +41,7 @@ class ProductController extends Controller
       ]);
 
       if($request->image) {
-         $image_name = time().'.'.$request->image->getClientOriginalExtension();
+         $image_name = time().'.'.$request->image->extension();
          $request->image->move(public_path('product-images/'), $image_name);
       }
       else {
@@ -85,7 +85,7 @@ class ProductController extends Controller
       ]);
 
       if($request->image) {
-         $image_name = time().'.'.$request->image->getClientOriginalExtension();
+         $image_name = time().'.'.$request->image->extension();
          $request->image->move(public_path('product-images/'), $image_name);
       }
       else {

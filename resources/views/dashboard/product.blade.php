@@ -20,6 +20,7 @@
           <table class="table align-items-center mb-0">
             <thead>
               <tr>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
@@ -33,6 +34,10 @@
                 
                @foreach ($products as $product)
                <tr>
+                  <td class="align-middle text-center">
+                     <span class="text-secondary text-xs font-weight-bold">{{ $product->id }}</span>
+                  </td>
+
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div>
