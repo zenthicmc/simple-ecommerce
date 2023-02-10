@@ -15,9 +15,9 @@
         <h6>Products</h6>
       </div>
       <div class="card-body px-0 pt-0 pb-2">
-        <div class="table-responsive p-0">
+        <div class="table-responsive p-4">
           <a class="btn btn-primary" style="margin-left: 17px;font-size: 12px;" href="{{ route('product_new') }}">Create Product</a>
-          <table class="table align-items-center mb-0 p-4" id="table">
+          <table class="table align-items-center mb-0" id="table">
             <thead>
               <tr>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
