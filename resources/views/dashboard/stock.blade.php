@@ -18,7 +18,7 @@
         <div class="table-responsive p-0">
           <a class="btn btn-primary" style="margin-left: 17px;font-size: 12px;" href="{{ route('stock_new') }}">Add Stock</a>
           <a class="btn btn-success" style="margin-left: 10px;font-size: 12px;" href="{{ route('stock_import') }}">Import Stock</a>
-          <table class="table align-items-center mb-0" id="table">
+          <table class="table align-items-center mb-0 p-4" id="table">
             <thead>
               <tr>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Code</th>
