@@ -37,6 +37,7 @@ class ProductController extends Controller
         'name' => ['required', 'string', 'max:255', 'unique:products'],
         'description' => ['required', 'string', 'max:100000'],
         'price' => ['required', 'numeric'],
+        'min_quantity' => ['required'],
 		  'image' => $rules_image,
       ]);
 
@@ -54,6 +55,7 @@ class ProductController extends Controller
          'slug' => Str::slug($request->name),
          'description' => $request->description,
          'price' => $request->price,
+         'min_quantity' => $request->min_quantity,
          'image' => $image_name,
 		]);
 
@@ -81,6 +83,7 @@ class ProductController extends Controller
          'name' => $rules_name,
          'description' => ['required', 'string', 'max:100000'],
          'price' => ['required', 'numeric'],
+         'min_quantity' => ['required'],
          'image' => $rules_image,
       ]);
 
@@ -98,6 +101,7 @@ class ProductController extends Controller
          'slug' => Str::slug($request->name),
 			'description' => $request->description,
 			'price' => $request->price,
+         'min_quantity' => $request->min_quantity,
 			'image' => $image_name,
 		]);
 

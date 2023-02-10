@@ -53,10 +53,10 @@ const Detail = (props) => {
 					<Card w={'100%'} h={'280'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
 						<CardBody>
 							<Text fontSize={'lg'} fontWeight={'600'} marginBottom={'5'}>🛒 Purchase</Text>
-							<Increament stock={props.count_stocks} data={props.stocks} price={product.price} id={product.id} />
+							<Increament stock={props.count_stocks} data={props.stocks} price={product.price} id={product.id} product={product} />
 						</CardBody>
 					</Card>
-					<Card w={'100%'} h={'340'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
+					<Card w={'100%'} h={'auto'} bg={bg} variant={'outline'} px={'3'} py={'2'}>
 						<CardBody>
 							<Text fontSize={'lg'} fontWeight={'600'} marginBottom={'5'}>✅ Warranty</Text>
 							<Text fontSize={'sm'} fontWeight={'300'}>

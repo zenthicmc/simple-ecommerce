@@ -18,6 +18,7 @@ class Product extends Model
         'description',
         'price',
         'image',
+        'min_quantity',
         'created_at',
         'updated_at'
     ];

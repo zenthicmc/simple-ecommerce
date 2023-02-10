@@ -55,6 +55,13 @@
                </div>
                <div class="col-md-12">
                   <div class="form-group">
+                     <label class="form-control-label">Minimal Quantity</label>
+                     <input class="form-control" type="number" name="min_quantity" value="{{ $product->min_quantity }}" autocomplete="off">
+                     <div class="form-text">Minimal quantity when user buy this product</div>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <div class="form-group">
                      <label class="form-control-label">Description</label>
                         <input id="description" type="hidden" name="description" value="{{ $product->description }}">
                         <trix-editor input="description"></trix-editor>

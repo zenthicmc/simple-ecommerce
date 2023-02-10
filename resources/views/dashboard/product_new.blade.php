@@ -25,7 +25,7 @@
                <div class="col-md-6">
                   <div class="form-group">
                      <label class="form-control-label">Name</label>
-                     <input class="form-control" type="text" name="name" autocomplete="off" required>
+                     <input class="form-control" type="text" name="name" autocomplete="off" value="{{ old('name') }}" required>
                   </div>
                </div>
                <div class="col-md-6">
@@ -41,7 +41,7 @@
                <div class="col-md-6">
                   <div class="form-group">
                      <label class="form-control-label">Price</label>
-                     <input class="form-control" type="number" name="price" autocomplete="off" required>
+                     <input class="form-control" type="number" name="price" autocomplete="off" value="{{ old('price') }}" required>
                      <div class="form-text">Example: 50000, dont include formatting</div>
                   </div>
                </div>
@@ -54,8 +54,15 @@
                </div>
                <div class="col-md-12">
                   <div class="form-group">
+                     <label class="form-control-label">Minimal Quantity</label>
+                     <input class="form-control" type="number" name="min_quantity" value="{{ old('min_quantity') }}" autocomplete="off">
+                     <div class="form-text">Minimal quantity when user buy this product</div>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <div class="form-group">
                      <label class="form-control-label">Description</label>
-                     <input id="description" type="hidden" name="description">
+                     <input id="description" type="hidden" value="{{ old('description') }}" name="description">
                      <trix-editor input="description"></trix-editor>
                   </div>
                </div>     
