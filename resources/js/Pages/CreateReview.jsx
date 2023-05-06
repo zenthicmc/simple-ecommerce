@@ -11,7 +11,7 @@ import { useState } from 'react'
 const CreateReview = (props) => {
 	const bg = useColorModeValue('gray.50', 'gray.700')
 	const color = useColorModeValue('gray.600', 'gray.50')
-	const [star, setStar] = useState(4)
+	const [star, setStar] = useState(5)
 	const [isSuccess, setIsSuccess] = useState(false)
 	const transaction = props.transaction
 
