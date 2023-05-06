@@ -64,14 +64,27 @@ class TripayCallbackController extends Controller
                     $quantity = $transaction->quantity;
                     $order_items = Stock::where('id_product', $transaction->id_product)->orderBy('created_at', 'asc')->take($quantity)->get();
 
-                    foreach ($order_items as $order_item) {
-                        $order_item->isUnlimited == 'true' ? $order_item->update(['available' => 'true']) : $order_item->update(['available' => 'false']);
+                    if (count($order_items) < $quantity) {
+                        $transaction->update(['status' => 'PENDING']);
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Insufficient stock',
+                        ]);
                     }
 
-                    $transaction->update([
-                        'stock' => $order_items,
-                        'status' => 'PAID'
-                    ]);
+                    else {
+                        foreach ($order_items as $order_item) {
+                            $order_item->isUnlimited == 'true' ? $order_item->update(['available' => 'true']) : $order_item->update(['available' => 'false']);
+                        }
+
+                        $transaction->update([
+                            'stock' => $order_items,
+                            'status' => 'PAID'
+                        ]);
+                    }
+
+                    $transaction->save();
                     break;
 
                 case 'EXPIRED':
