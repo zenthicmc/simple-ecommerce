@@ -15,7 +15,7 @@ use App\Mail\OrderShipped;
 class TripayCallbackController extends Controller
 {
     // Isi dengan private key anda
-    protected $privateKey = 'aMiNq-PDzZN-ilF39-h7dqy-KawOe';
+    protected $privateKey = '4B2z1-dgG1v-Zfzyd-vQ4Mo-3Slya';
 
     public function handle(Request $request)
     {
@@ -62,7 +62,7 @@ class TripayCallbackController extends Controller
             switch ($status) {
                 case 'PAID':
                     $quantity = $transaction->quantity;
-                    $order_items = Stock::where('id_product', $transaction->id_product)->orderBy('created_at', 'asc')->take($quantity)->get();
+                    $order_items = Stock::where('id_product', $transaction->id_product)->orderBy('created_at', 'asc')->where('available', 'true')->take($quantity)->get();
 
                     if (count($order_items) < $quantity) {
                         $transaction->update(['status' => 'PENDING']);
@@ -76,6 +76,7 @@ class TripayCallbackController extends Controller
                     else {
                         foreach ($order_items as $order_item) {
                             $order_item->isUnlimited == 'true' ? $order_item->update(['available' => 'true']) : $order_item->update(['available' => 'false']);
+                            $order_item->save();
                         }
 
                         $transaction->update([
@@ -83,8 +84,6 @@ class TripayCallbackController extends Controller
                             'status' => 'PAID'
                         ]);
                     }
-
-                    $transaction->save();
                     break;
 
                 case 'EXPIRED':
