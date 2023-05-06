@@ -22,7 +22,7 @@
             <thead>
               <tr>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Code</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th><th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Is Available</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unlimited</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Content</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Expire At</th>
@@ -47,6 +47,10 @@
                         <span style="font-size: 10px;" class="badge badge-sm bg-gradient-{{ $stock->product->category->color }}">{{ $stock->product->name }}</span>
                       </div>
                     </div>
+                  </td>
+
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ $stock->available == 'false' ? 'No' : 'Yes' }}</span>
                   </td>
 
                   <td class="align-middle text-center">

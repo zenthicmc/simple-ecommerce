@@ -14,7 +14,7 @@ class StockController extends Controller
    {
       $data = [
       	'title' => 'Admin | Stocks',
-      	'stocks' => Stock::all()->sortBy('id_product')->where('available', '==', 'true'),
+      	'stocks' => Stock::all()->sortBy('id_product'),
       ];
       return view('dashboard.stock', $data);
    }
