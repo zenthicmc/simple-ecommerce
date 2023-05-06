@@ -15,7 +15,7 @@ const sanitize = (str) => {
 const Success = (props) => {
 	const bg = useColorModeValue('gray.50', 'gray.700')
 	const transaction = props.transaction
-	const stock = props.stock
+	const stock = JSON.parse(transaction.stock)
 
 	return (
 		<div className={main.container}>
@@ -37,7 +37,10 @@ const Success = (props) => {
 						Your Order Details:
 					</Text>
 					<Text fontSize={'sm'} fontWeight={'600'} textAlign={'center'} marginBottom={'7'} marginTop={'1'}>
-						<div dangerouslySetInnerHTML={{__html: transaction.stock}}></div>
+						{stock && stock.map((item, i) => (
+								<div key={i} dangerouslySetInnerHTML={{__html: item.content}}></div>
+
+						))}
 					</Text>
 					<Center marginBottom={'10'} w={'100%'} gap={'5'}>
 						<Link href={'/'} w={'100%'}>

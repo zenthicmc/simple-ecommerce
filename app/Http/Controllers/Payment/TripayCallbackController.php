@@ -24,104 +24,73 @@ class TripayCallbackController extends Controller
         $signature = hash_hmac('sha256', $json, $this->privateKey);
 
         if ($signature !== (string) $callbackSignature) {
-        	return 'Invalid signature';
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid signature',
+            ]);
         }
 
         if ('payment_status' !== (string) $request->server('HTTP_X_CALLBACK_EVENT')) {
-            return 'Invalid callback event, no action was taken';
+            return response()->json([
+                'success' => false,
+                'message' => 'Unrecognized callback event, no action was taken',
+            ]);
         }
 
         $data = json_decode($json);
-        $uniqueRef = $data->reference;
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid data sent by tripay',
+            ]);
+        }
+
+        $reference = $data->reference;
         $status = strtoupper((string) $data->status);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Proses callback untuk closed payment
-        |--------------------------------------------------------------------------
-        */
-        if (1 === (int) $data->is_closed_payment) {
-            $transaction = Transaction::where('reference', $uniqueRef)->first();
-			$product = Product::where('id', $transaction->id_product)->first();
-       		$stock = Stock::where('id_product', $product->id)->where('available', 'true')->first();
+        if ($data->is_closed_payment === 1) {
+            $transaction = Transaction::where('reference', $reference)->first();
 
             if (!$transaction) {
-                return 'No invoice found for this unique ref: ' . $uniqueRef;
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Transaction not found',
+                ]);
             }
 
-			if ($stock && $status === 'PAID') {
-                $count = $transaction->quantity;
-                for ($i = 0; $i < $count; $i++) {
-                    $stock = Stock::where('id_product', $product->id)->where('available', 'true')->first();
-                    // update transaction stock without removing previous value
+            switch ($status) {
+                case 'PAID':
+                    $quantity = $transaction->quantity;
+                    $order_items = Stock::where('id_product', $transaction->id_product)->orderBy('created_at', 'asc')->take($quantity)->get();
+
+                    foreach ($order_items as $order_item) {
+                        $order_item->isUnlimited == 'true' ? $order_item->update(['available' => 'true']) : $order_item->update(['available' => 'false']);
+                    }
+
                     $transaction->update([
-                        'stock' => $transaction->stock . $stock->content
+                        'stock' => $order_items,
+                        'status' => 'PAID'
                     ]);
-                    $stock->isUnlimited == 'true' ? $stock->update(['available' => 'true']) : $stock->update(['available' => 'false']);
-                }
+                    break;
 
-                $payload = [
-                    'iss' => env('APP_NAME'),
-                    'aud' => $transaction->reference,
-                    'iat' => time(),
-                    'exp' => time() + 60 * 60 * 24 * 30,
-                ];
+                case 'EXPIRED':
+                    $transaction->update(['status' => 'EXPIRED']);
+                    break;
 
-                $review_code = JWT::encode($payload, env('JWT_KEY'), 'HS256');
-                $transaction->update([
-                    'status' => 'PAID',
-                    'review_code' => $review_code
-                ]);
+                case 'FAILED':
+                    $transaction->update(['status' => 'FAILED']);
+                    break;
 
-                Mail::to($transaction->email)->send(new OrderShipped($transaction));
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Payment success, please check your email',
-                    'transaction' => $transaction,
-                ]);
-
-            } else {
-                $transaction->update(['status' => 'Pending']);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Stock is not available, please contact admin'
-                ]);
+                default:
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid transaction status',
+                    ]);
             }
-        }
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Proses callback untuk open payment
-        |--------------------------------------------------------------------------
-        */
-        $transaction = Transaction::where('reference', $uniqueRef)
-            ->where('status', 'UNPAID')
-            ->first();
-
-        if (!$transaction) {
-            return 'Invoice not found or current status is not UNPAID';
-        }
-
-        if ((int) $data->total_price !== (int) $transaction->total_price) {
-            return 'Invalid price, Expected: ' . $transaction->total_price . ' - Received: ' . $data->total_price;
-        }
-
-        switch ($data->status) {
-            case 'PAID':
-				$transaction->update(['status' => $status]);
-           		return response()->json(['success' => true]);
-
-            case 'EXPIRED':
-                $transaction->update(['status' => 'EXPIRED']);
-                return response()->json(['success' => true]);
-
-            case 'FAILED':
-                $transaction->update(['status' => 'FAILED']);
-                return response()->json(['success' => true]);
-
-            default:
-                return response()->json(['error' => 'Unrecognized payment status']);
+            $transaction->save();
+            return response()->json(['success' => true]);
         }
     }
 }
