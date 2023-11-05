@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Stock;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderShipped;
 
 class TripayCallbackController extends Controller
 {
     // Isi dengan private key anda
-    protected $privateKey = 'aMiNq-PDzZN-ilF39-h7dqy-KawOe';
+    protected $privateKey = 'z4il2-u6RmX-VnVSd-Ju7py-7APwg';
 
     public function handle(Request $request)
     {
@@ -79,10 +78,15 @@ class TripayCallbackController extends Controller
                             $order_item->save();
                         }
 
+                        $token = Str::uuid();
+
                         $transaction->update([
                             'stock' => $order_items,
-                            'status' => 'PAID'
+                            'status' => 'PAID',
+                            'review_code' => $token,
                         ]);
+
+                        Mail::to($transaction->email)->send(new OrderShipped($transaction));
                     }
                     break;
 

@@ -122,8 +122,7 @@ class FrontController extends Controller
 
     public function review($code) {
         try {
-            $decoded = JWT::decode($code, new Key(env('JWT_KEY'), 'HS256'));
-            $transaction = Transaction::where('reference', $decoded->aud)->where('review_code', $code)->first();
+            $transaction = Transaction::where('review_code', $code)->first();
 
             if(!$transaction) {
                 abort(404);
@@ -143,8 +142,7 @@ class FrontController extends Controller
 
     public function review_store(Request $request, $code) {
         try {
-            $decoded = JWT::decode($code, new Key(env('JWT_KEY'), 'HS256'));
-            $transaction = Transaction::where('reference', $decoded->aud)->where('review_code', $code)->first();
+            $transaction = Transaction::where('review_code', $code)->first();
 
             if(!$transaction) {
                 abort(404);

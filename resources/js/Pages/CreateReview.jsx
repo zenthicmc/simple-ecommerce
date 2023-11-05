@@ -20,7 +20,7 @@ const CreateReview = (props) => {
 		name: transaction.name,
 		star : star,
 		description: "",
-  	})
+  })
 
 	function isEmpty(obj) {
 		return Object.keys(obj).length === 0;

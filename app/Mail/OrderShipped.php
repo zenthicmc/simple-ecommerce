@@ -38,7 +38,7 @@ class OrderShipped extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('no-reply@kapitalzone.com', 'Kapital Zone'),
+            from: new Address('no-reply@xeron.io', 'Priobps'),
             subject: 'Order Shipped',
         );
     }
