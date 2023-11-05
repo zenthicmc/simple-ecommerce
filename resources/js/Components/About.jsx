@@ -1,7 +1,7 @@
 import { Box, Badge, Text, Image, Flex } from '@chakra-ui/react'
 import { AiFillStar } from 'react-icons/ai'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import LogoPrio from '../Assets/logo-piro.png'
+import LogoPrio from "../Assets/logo-prio.png";
 
 const About = (props) => {
 	const bg = useColorModeValue('gray.50', 'gray.700')
